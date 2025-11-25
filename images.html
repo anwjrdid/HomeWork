@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Archive</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 상단 헤더 -->
+  <header class="header">
+    <a href="index.html">
+    <div class="header-left neon-title">AI Archive</div></a>
+
+    <div class="header-center">
+      <input type="text" placeholder="검색..." class="search-box">
+    </div>
+
+    <div class="header-right">
+      <a href="login.html">
+        <button class="btn">로그인</button></a>
+        <a href="join.html">
+        <button class="btn">회원가입</button></a>
+        <a href="profile.html">
+        <button class="btn">🎃</button></a>
+      <div class="profile-icon">👤</div>
+    </div>
+  </header>
+
+  <!-- 전체보기 콘텐츠 -->
+  <main class="fullview-content">
+
+    <h1 class="page-title">🖼️ AI 이미지 전체보기</h1>
+
+    <div class="grid-list">
+      <div class="card">이미지 1</div>
+      <div class="card">이미지 2</div>
+      <div class="card">이미지 3</div>
+      <div class="card">이미지 4</div>
+      <div class="card">이미지 5</div>
+      <div class="card">이미지 6</div>
+      <div class="card">이미지 7</div>
+      <div class="card">이미지 8</div>
+      <div class="card">이미지 9</div>
+      <div class="card">이미지 10</div>
+      <div class="card">이미지 11</div>
+      <div class="card">이미지 12</div>
+      <div class="card">이미지 13</div>
+      <div class="card">이미지 14</div>
+      <div class="card">이미지 15</div>
+      <div class="card">이미지 16</div>
+      <div class="card">이미지 17</div>
+      <div class="card">이미지 18</div>
+      <div class="card">이미지 19</div>
+      <div class="card">이미지 20</div>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn">이전</button>
+      <button class="page-number active">1</button>
+      <button class="page-number">2</button>
+      <button class="page-number">3</button>
+      <button class="page-btn">다음</button>
+    </div>
+
+  </main>
+
+</body>
+</html>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    const pumpkinBtn = document.querySelector(".header-right a:nth-child(3)");
+    const loginBtn = document.querySelector(".header-right a:nth-child(1)");
+    const joinBtn = document.querySelector(".header-right a:nth-child(2)");
+
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn === "true") {
+        // 로그인했으면 🎃만 보이게
+        pumpkinBtn.style.display = "block";
+        loginBtn.style.display = "none";
+        joinBtn.style.display = "none";
+    } else {
+        // 로그인 안했으면 로그인/회원가입만 보이게
+        pumpkinBtn.style.display = "none";
+        loginBtn.style.display = "block";
+        joinBtn.style.display = "block";
+    }
+});
+</script>

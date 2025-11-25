@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Archive - 프로필</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .profile-container {
+      margin-top: 130px;
+      max-width: 700px;
+      background: #141414;
+      padding: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 12px;
+      border: 1px solid #333;
+      box-shadow: 0 0 20px rgba(0,255,255,0.15);
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .profile-img {
+      width: 90px;
+      height: 90px;
+      background: #222;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      border: 1px solid #444;
+    }
+
+    .profile-name {
+      font-size: 26px;
+      font-weight: 700;
+    }
+
+    .profile-email {
+      color: #aaa;
+      font-size: 15px;
+    }
+
+    .section-title {
+      font-size: 20px;
+      margin-top: 35px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .info-box {
+      padding: 15px;
+      background: #1b1b1b;
+      border-radius: 8px;
+      border: 1px solid #333;
+      margin-bottom: 8px;
+    }
+
+    .logout-btn {
+      margin-top: 30px;
+      padding: 12px 18px;
+      background: #c80000;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .logout-btn:hover {
+      background: #ff3333;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <a href="index.html">
+    <div class="header-left neon-title">AI Archive</div></a>
+
+    <div class="header-center">
+      <input type="text" placeholder="검색..." class="search-box">
+    </div>
+
+    <div class="header-right">
+      <button class="btn">로그아웃</button>
+      <div class="profile-icon">👤</div>
+    </div>
+  </header>
+
+  <!-- 프로필 내용 -->
+  <div class="profile-container">
+
+    <div class="profile-header">
+      <div class="profile-img">👤</div>
+      <div>
+        <div class="profile-name">사용자 닉네임</div>
+        <div class="profile-email">user@example.com</div>
+      </div>
+    </div>
+
+    <div class="section-title">📌 내 활동</div>
+    <div class="info-box">업로드한 이미지: 0개</div>
+    <div class="info-box">업로드한 영상: 0개</div>
+    <div class="info-box">좋아요한 작품: 0개</div>
+
+    <div class="section-title">⚙️ 계정 설정</div>
+    <div class="info-box">닉네임 변경</div>
+    <div class="info-box">비밀번호 변경</div>
+    <!-- 닉네임 변경, 비밀번호 변경 -> 버튼 형식으로 변경 -->
+
+    <button class="logout-btn">로그아웃</button>
+    <script>
+    function logout() {
+        localStorage.removeItem("isLoggedIn");
+        window.location.href = "index.html";
+    }
+    </script>
+  </div>
+
+</body>
+</html>

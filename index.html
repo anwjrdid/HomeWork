@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Archive</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- 상단 헤더 -->
+  <header class="header">
+    <a href="index.html">
+    <div class="header-left neon-title">AI Archive</div></a>
+
+    <div class="header-center">
+      <input type="text" placeholder="검색..." class="search-box">
+    </div>
+
+    <div class="header-right">
+        <a href="login.html">
+        <button class="btn">로그인</button></a>
+        <a href="join.html">
+        <button class="btn">회원가입</button></a>
+        <a href="profile.html">
+        <button class="btn">🎃</button></a>
+        <div class="profile-icon">👤</div>
+    </div>
+  </header>
+
+  <!-- 메인 콘텐츠 -->
+  <main class="content">
+
+    <!-- AI 영상 추천 -->
+    <section class="section">
+      <div class="section-header">
+        <h2>🎬 AI 영상 TOP 10</h2>
+        <a href="videos.html">
+        <button class="view-all-btn">전체 보기</button></a>
+      </div>
+      <div class="list-container">
+        <!-- 리스트 예시 -->
+        <div class="item">1위 영상</div>
+        <div class="item">2위 영상</div>
+        <div class="item">3위 영상</div>
+        <!-- ... 10위까지 -->
+      </div>
+    </section>
+
+    <!-- AI 이미지 추천 -->
+    <section class="section">
+      <div class="section-header">
+        <h2>🖼️ AI 이미지 TOP 10</h2>
+        <a href="images.html">
+        <button class="view-all-btn">전체 보기</button></a>
+      </div>
+      <div class="list-container">
+        <div class="item">1위 이미지</div>
+        <div class="item">2위 이미지</div>
+        <div class="item">3위 이미지</div>
+        <!-- ... -->
+      </div>
+    </section>
+
+  </main>
+
+</body>
+</html>
+<script>
+window.addEventListener("DOMContentLoaded", () => {
+    const pumpkinBtn = document.querySelector(".header-right a:nth-child(3)");
+    const loginBtn = document.querySelector(".header-right a:nth-child(1)");
+    const joinBtn = document.querySelector(".header-right a:nth-child(2)");
+
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+
+    if (isLoggedIn === "true") {
+        // 로그인했으면 🎃만 보이게
+        pumpkinBtn.style.display = "block";
+        loginBtn.style.display = "none";
+        joinBtn.style.display = "none";
+    } else {
+        // 로그인 안했으면 로그인/회원가입만 보이게
+        pumpkinBtn.style.display = "none";
+        loginBtn.style.display = "block";
+        joinBtn.style.display = "block";
+    }
+});
+</script>

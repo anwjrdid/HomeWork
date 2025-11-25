@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Archive - 회원가입</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            background: #0d0d0d;
+            color: #fff;
+            font-family: 'Pretendard', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .join-container {
+            width: 450px;
+            padding: 40px 35px;
+            background: #141414;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+            text-align: center;
+        }
+
+        .logo-text {
+            font-size: 38px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #00f6ff;
+            text-shadow: 0 0 10px #00f6ff, 0 0 20px #00f6ff;
+        }
+
+        .join-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            font-size: 14px;
+            color: #ccc;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: white;
+            font-size: 15px;
+        }
+
+        .join-button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            background: #00c8c8;
+            border: none;
+            border-radius: 25px;
+            color: #000;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .join-button:hover {
+            background: #00e4ff;
+            box-shadow: 0 0 10px #00e4ff;
+        }
+
+        .login-link {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #6ba6ff;
+            text-decoration: none;
+        }
+        .login-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="join-container">
+
+        <a href="index.html">
+        <div class="logo-text">AI Archive</div></a>
+
+        <div class="join-title">회원가입</div>
+
+        <div class="input-group">
+            <label>이메일</label>
+            <input type="email" class="input-box" placeholder="이메일 입력">
+        </div>
+
+        <div class="input-group">
+            <label>닉네임</label>
+            <input type="text" class="input-box" placeholder="닉네임 입력">
+        </div>
+
+        <div class="input-group">
+            <label>비밀번호</label>
+            <input type="password" class="input-box" placeholder="비밀번호 입력">
+        </div>
+
+        <div class="input-group">
+            <label>비밀번호 확인</label>
+            <input type="password" class="input-box" placeholder="비밀번호 확인">
+        </div>
+
+        <button class="join-button">회원가입</button>
+
+        <div style="margin-top: 15px;">
+            이미 계정이 있으신가요?
+            <a href="login.html" class="login-link">로그인</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
