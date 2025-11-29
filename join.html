@@ -130,6 +130,58 @@
         </div>
 
     </div>
+<script>
+// 회원가입 기능
+document.addEventListener("DOMContentLoaded", () => {
+    const joinBtn = document.querySelector(".join-button");
+    const inputs = document.querySelectorAll(".input-box");
+
+    joinBtn.addEventListener("click", () => {
+        const email = inputs[0].value.trim();
+        const nickname = inputs[1].value.trim();
+        const pw = inputs[2].value;
+        const pwCheck = inputs[3].value;
+
+        // 입력 검증
+        if (!email || !nickname || !pw || !pwCheck) {
+            alert("모든 칸을 입력해주세요.");
+            return;
+        }
+
+        if (!email.includes("@")) {
+            alert("올바른 이메일 형식이 아닙니다.");
+            return;
+        }
+
+        if (nickname.length < 2) {
+            alert("닉네임은 2자 이상이어야 합니다.");
+            return;
+        }
+
+        if (pw.length < 6) {
+            alert("비밀번호는 6자 이상이어야 합니다.");
+            return;
+        }
+
+        if (pw !== pwCheck) {
+            alert("비밀번호가 일치하지 않습니다.");
+            return;
+        }
+
+        // 유저 정보 저장
+        const userData = {
+            email: email,
+            nickname: nickname,
+            password: pw
+        };
+
+        localStorage.setItem("user", JSON.stringify(userData));
+
+        alert("회원가입이 완료되었습니다!");
+        window.location.href = "login.html";
+    });
+});
+</script>
 
 </body>
 </html>
