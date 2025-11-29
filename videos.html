@@ -25,6 +25,26 @@
       <div class="profile-icon">👤</div>
     </div>
   </header>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    const loginBtn = document.querySelector(".header-right a:nth-child(1)");
+    const joinBtn  = document.querySelector(".header-right a:nth-child(2)");
+    const profileBtn = document.querySelector(".header-right a:nth-child(3)");
+
+    if (isLoggedIn) {
+        profileBtn.style.display = "block";
+        loginBtn.style.display = "none";
+        joinBtn.style.display = "none";
+    } else {
+        profileBtn.style.display = "none";
+        loginBtn.style.display = "block";
+        joinBtn.style.display = "block";
+    }
+});
+</script>
+
   <!-- 전체보기 콘텐츠 -->
   <main class="fullview-content">
 
