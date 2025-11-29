@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>AI Archive - 업로드</title>
+  <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    /* 업로드 페이지 스타일 (네 사이트 톤 유지) */
+
+    .upload-container {
+      margin-top: 130px;
+      max-width: 700px;
+      background: #141414;
+      padding: 40px;
+      margin-left: auto;
+      margin-right: auto;
+      border-radius: 12px;
+      border: 1px solid #333;
+      box-shadow: 0 0 20px rgba(0,255,255,0.15);
+    }
+
+    .upload-title {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .type-tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 10px;
+    }
+
+    .tab-btn {
+      padding: 10px 18px;
+      border: 1px solid #444;
+      background: #111;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: #0ff;
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .upload-box {
+      margin-top: 20px;
+      border: 2px dashed #555;
+      padding: 40px;
+      text-align: center;
+      border-radius: 10px;
+      background: #1b1b1b;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .upload-box:hover {
+      border-color: #0ff;
+      box-shadow: 0 0 15px #0ff;
+    }
+
+    .file-name {
+      margin-top: 15px;
+      color: #ccc;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .progress-bar {
+      margin-top: 15px;
+      width: 100%;
+      height: 10px;
+      background: #333;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #0ff;
+      transition: 0.1s;
+    }
+
+    .upload-btn {
+      margin-top: 25px;
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #0ff;
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .upload-btn:hover {
+      box-shadow: 0 0 10px #0ff;
+    }
+
+    .result-link {
+      margin-top: 20px;
+      padding: 12px;
+      background: #111;
+      text-align: center;
+      border: 1px solid #333;
+      border-radius: 8px;
+      word-break: break-all;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 헤더 -->
+  <header class="header">
+    <a href="index.html">
+      <div class="header-left neon-title">AI Archive</div>
+    </a>
+
+    <div class="header-center">
+      <input type="text" placeholder="검색..." class="search-box" />
+    </div>
+
+    <div class="header-right">
+      <!-- <a href="login.html"><button class="btn">로그인</button></a> -->
+      <!-- <a href="join.html"><button class="btn">회원가입</button></a> -->
+      <a href="profile.html"><button class="btn">🎃</button></a>
+      <div class="profile-icon">👤</div>
+    </div>
+  </header>
+  
+
+  <!-- 업로드 UI -->
+  <div class="upload-container">
+
+    <div class="upload-title">📤 파일 업로드</div>
+
+    <!-- 업로드 타입 선택 -->
+    <div class="type-tabs">
+      <button class="tab-btn active" id="tab-image">이미지 업로드</button>
+      <button class="tab-btn" id="tab-video">영상 업로드</button>
+    </div>
+
+    <!-- 파일 선택 영역 -->
+    <div class="upload-box" id="uploadBox">
+      클릭 또는 파일을 드래그하세요
+      <input type="file" id="fileInput" style="display:none;">
+    </div>
+
+    <div class="file-name" id="fileName">선택된 파일 없음</div>
+
+    <!-- 진행률 -->
+    <div class="progress-bar">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <button class="upload-btn" id="uploadBtn">업로드하기</button>
+
+    <div class="result-link" id="resultLink" style="display:none;"></div>
+
+  </div>
+
+
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-storage.js"></script>
+
+<!-- Firebase 설정 (네 프로젝트용으로 바꿔줘) -->
+<script>
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_BUCKET",
+    messagingSenderId: "YOUR_MSG_ID",
+    appId: "YOUR_APP_ID"
+  };
+
+  const app = firebase.initializeApp(firebaseConfig);
+  const storage = firebase.storage();
+</script>
+
+
+<script>
+let uploadType = "image"; // 기본값: 이미지
+const fileInput = document.getElementById("fileInput");
+const uploadBox = document.getElementById("uploadBox");
+const fileNameText = document.getElementById("fileName");
+const progressFill = document.getElementById("progressFill");
+const resultLink = document.getElementById("resultLink");
+
+/* ---------- 탭 변경 ---------- */
+document.getElementById("tab-image").onclick = () => setType("image");
+document.getElementById("tab-video").onclick = () => setType("video");
+
+function setType(type) {
+    uploadType = type;
+
+    document.getElementById("tab-image").classList.remove("active");
+    document.getElementById("tab-video").classList.remove("active");
+
+    if (type === "image") document.getElementById("tab-image").classList.add("active");
+    else document.getElementById("tab-video").classList.add("active");
+}
+
+/* ---------- 파일 선택 ---------- */
+uploadBox.onclick = () => fileInput.click();
+
+fileInput.onchange = () => {
+  const file = fileInput.files[0];
+  if (file) validateFile(file);
+};
+
+uploadBox.addEventListener("dragover", e => {
+  e.preventDefault();
+  uploadBox.style.borderColor = "#0ff";
+});
+
+uploadBox.addEventListener("dragleave", e => {
+  uploadBox.style.borderColor = "#555";
+});
+
+uploadBox.addEventListener("drop", e => {
+  e.preventDefault();
+  uploadBox.style.borderColor = "#555";
+
+  const file = e.dataTransfer.files[0];
+  if (file) validateFile(file);
+});
+
+/* ---------- 파일 검증 ---------- */
+function validateFile(file) {
+  const imageExt = ["jpg", "jpeg", "png", "webp"];
+  const videoExt = ["mp4", "mov", "webm"];
+
+  const ext = file.name.split(".").pop().toLowerCase();
+
+  if (uploadType === "image" && !imageExt.includes(ext)) {
+    alert("이미지 파일만 업로드할 수 있습니다.");
+    fileInput.value = "";
+    return;
+  }
+
+  if (uploadType === "video" && !videoExt.includes(ext)) {
+    alert("영상 파일만 업로드할 수 있습니다.");
+    fileInput.value = "";
+    return;
+  }
+
+  fileNameText.innerText = file.name;
+}
+
+/* ---------- Firebase 업로드 ---------- */
+document.getElementById("uploadBtn").onclick = () => {
+  const file = fileInput.files[0];
+  if (!file) {
+    alert("파일을 선택하세요!");
+    return;
+  }
+
+  const filePath =
+    uploadType === "image"
+      ? `images/${Date.now()}_${file.name}`
+      : `videos/${Date.now()}_${file.name}`;
+
+  const storageRef = storage.ref(filePath);
+  const uploadTask = storageRef.put(file);
+
+  uploadTask.on(
+    "state_changed",
+    snapshot => {
+      const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      progressFill.style.width = percent + "%";
+    },
+    error => {
+      alert("업로드 중 오류 발생: " + error);
+    },
+    () => {
+      uploadTask.snapshot.ref.getDownloadURL().then(url => {
+        resultLink.style.display = "block";
+        resultLink.innerText = url;
+      });
+    }
+  );
+};
+</script>
+
+</body>
+</html>
