@@ -90,10 +90,29 @@
     </div>
 
     <div class="header-right">
-      <button class="btn">로그아웃</button>
+      <button class="logout-btn" onclick="logout()">로그아웃</button>
       <div class="profile-icon">👤</div>
     </div>
   </header>
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
+    const loginBtn = document.querySelector(".header-right a:nth-child(1)");
+    const joinBtn  = document.querySelector(".header-right a:nth-child(2)");
+    const profileBtn = document.querySelector(".header-right a:nth-child(3)");
+
+    if (isLoggedIn) {
+        profileBtn.style.display = "block";
+        loginBtn.style.display = "none";
+        joinBtn.style.display = "none";
+    } else {
+        profileBtn.style.display = "none";
+        loginBtn.style.display = "block";
+        joinBtn.style.display = "block";
+    }
+});
+</script>
 
   <!-- 프로필 내용 -->
   <div class="profile-container">
@@ -109,21 +128,59 @@
     <div class="section-title">📌 내 활동</div>
     <div class="info-box">업로드한 이미지: 0개</div>
     <div class="info-box">업로드한 영상: 0개</div>
-    <div class="info-box">좋아요한 작품: 0개</div>
+    <div class="info-box">받은 좋아요 수: 0개</div>
 
     <div class="section-title">⚙️ 계정 설정</div>
-    <div class="info-box">닉네임 변경</div>
-    <div class="info-box">비밀번호 변경</div>
-    <!-- 닉네임 변경, 비밀번호 변경 -> 버튼 형식으로 변경 -->
-
-    <button class="logout-btn">로그아웃</button>
+    <div class ="setting-box">
+      <div class="info-box">닉네임 변경 : </div>
+      <input type="text" id="newNickname" class="setting-input" placeholder="새 닉네임 입력">
+      <button class="setting-btn" onclick="changeNickname()">변경하기</button></div>
+    <div class="setting-box">
+      <div class="info-box">비밀번호 변경 : </div>
+      <input type="password" id="currentPassword" class="setting-input" placeholder="현재 비밀번호">
+      <input type="password" id="newPassword" class="setting-input" placeholder="새 비밀번호">
+      <button class="setting-btn" onclick="changePassword()">변경하기</button></div>
+    <a href="upload.html">
+    <button class="file-btn">파일 올리기</button></a>
+    <button class="deleteuser-btn" onclick="deleteUser()">계정 삭제</button>
     <script>
-    function logout() {
-        localStorage.removeItem("isLoggedIn");
-        window.location.href = "index.html";
-    }
-    </script>
-  </div>
+// 페이지 로드 시 유저 정보 표시
+document.addEventListener("DOMContentLoaded", () => {
+    const user = JSON.parse(localStorage.getItem("user"));
 
+    if (!user) {
+        alert("로그인이 필요한 페이지입니다.");
+        window.location.href = "login.html";
+        return;
+    }
+
+    document.querySelector(".profile-name").textContent = user.nickname;
+    document.querySelector(".profile-email").textContent = user.email;
+});
+
+// 로그아웃
+function logout() {
+    localStorage.setItem("isLoggedIn", "false");
+    alert("로그아웃되었습니다.");
+    window.location.href = "index.html";
+}
+
+// 계정 삭제
+function deleteUser() {
+    const check = confirm("정말 계정을 삭제하시겠습니까?\n삭제 후에는 복구할 수 없습니다.");
+
+    if (!check) return;
+
+    localStorage.removeItem("user");
+    localStorage.removeItem("isLoggedIn");
+
+    alert("계정이 삭제되었습니다.");
+    window.location.href = "index.html";
+}
+
+</script>
 </body>
 </html>
+
+<script src="changeNickname.js"></script>
+<script src="changePassword.js"></script>
